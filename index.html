@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>球隊記錄器</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-5">
+    <div class="max-w-md mx-auto bg-white p-6 rounded-xl shadow-lg">
+        <h1 class="text-xl font-bold mb-4">🏀 比賽記錄</h1>
+        <div class="mb-4">
+            <input id="opp" type="text" placeholder="對手名稱" class="border p-2 w-full mb-2">
+            <div class="text-3xl font-bold text-blue-600 text-center py-4" id="score">0</div>
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+            <button onclick="add(3)" class="bg-orange-500 text-white p-4 rounded">+3分</button>
+            <button onclick="add(2)" class="bg-orange-400 text-white p-4 rounded">+2分</button>
+            <button onclick="add(1)" class="bg-orange-300 text-white p-4 rounded">罰球</button>
+        </div>
+        <button onclick="exportCSV()" class="w-full mt-10 bg-green-600 text-white p-2 rounded">匯出數據</button>
+    </div>
+    <script>
+        let pts = 0;
+        function add(n) { pts += n; document.getElementById('score').innerText = pts; }
+        function exportCSV() {
+            let csv = "對手,得分\n" + document.getElementById('opp').value + "," + pts;
+            let blob = new Blob([csv], {type: 'text/csv'});
+            let a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'record.csv';
+            a.click();
+        }
+    </script>
+</body>
+</html>
